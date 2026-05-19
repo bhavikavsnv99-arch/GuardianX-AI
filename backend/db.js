@@ -1,0 +1,1 @@
+const conn = await mongoose.connect('mongodb://bhavikavsnv99_db_user:myproject123@cluster0-shard-00-00.x2gctyv.mongodb.net:27017,cluster0-shard-00-01.x2gctyv.mongodb.net:27017,cluster0-shard-00-02.x2gctyv.mongodb.net:27017/GuardianX-AI?ssl=true&replicaSet=atlas-xxxxxx-shard-0&authSource=admin&retryWrites=true&w=majority');
