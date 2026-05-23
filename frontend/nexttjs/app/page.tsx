@@ -6,7 +6,7 @@ export default function Home() {
       <Navbar />
 
       <h1 className="text-4xl font-bold mt-10">
-        GuardianX AI
+        GuardianX AI - Your Personal Safety Companion
       </h1>
 
       <p className="mt-4">
