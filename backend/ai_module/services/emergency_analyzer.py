@@ -5,12 +5,22 @@ load_dotenv()
 
 client = genai.Client()
 
-def ask_gemini(prompt):
+def analyze_emergency(user_text):
+
+    prompt = f"""
+    Analyze this emergency:
+
+    {user_text}
+
+    Return:
+    1. Emergency Type
+    2. Severity (Low/Medium/High)
+    3. Immediate Advice
+    """
+
     response = client.models.generate_content(
         model="gemini-2.5-flash",
         contents=prompt
     )
-
-    
 
     return response.text
