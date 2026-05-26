@@ -12,7 +12,8 @@ export default function ChatMessage({
       className={`
         p-4
         rounded-2xl
-        max-w-xl
+        max-w-2xl
+        whitespace-pre-wrap
         ${
           sender === "user"
             ? "bg-red-500 ml-auto"
