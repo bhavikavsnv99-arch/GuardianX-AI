@@ -12,6 +12,7 @@ import {
   Bell,
   User,
   FileWarning,
+  Sidebar,
 } from "lucide-react";
 
 import {
@@ -71,8 +72,8 @@ export default function DashboardPage() {
 
     <div className="min-h-screen bg-linear-to-br from-black via-gray-900 to-red-950 text-white p-8">
 
-      {/* Header */}
-      <div className="mb-10">
+      <Sidebar />
+      <div className="flex-1 p-10">
 
         <h1 className="text-5xl font-bold text-red-500">
           GuardianX Dashboard
