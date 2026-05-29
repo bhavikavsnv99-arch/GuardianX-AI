@@ -1,32 +1,24 @@
 from fastapi import APIRouter
 from app.schemas.emergency_schema import EmergencyRequest
 from ai_module.agents.emergency_agent import analyze_emergency
-from app.database.mongodb import db
+from app.database.mongodb import history_collection
 from datetime import datetime
 
 router = APIRouter()
+
 
 @router.post("/analyze")
 def analyze(data: EmergencyRequest):
 
     result = analyze_emergency(data.message)
 
-    severity = "LOW"
+    history_data = {
+        "message": data.message,
+        "response": result,
+        "timestamp": str(datetime.now())
+    }
 
-    if "high" in result.lower():
-        severity = "HIGH"
-
-    elif "medium" in result.lower():
-        severity = "MEDIUM"
-
-    timestamp = datetime.now()
-
-    db.emergencies.insert_one({
-        "user_message": data.message,
-        "ai_response": result,
-        "severity": severity,
-        "timestamp": timestamp
-    })
+    history_collection.insert_one(history_data)
 
     return {
         "response": result
