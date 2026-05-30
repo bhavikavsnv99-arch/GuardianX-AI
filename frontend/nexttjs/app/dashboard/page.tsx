@@ -45,10 +45,10 @@ export default function DashboardPage() {
     <div className="flex flex-col md:flex-row bg-gray-900 text-white min-h-screen">
 
       <Sidebar />
-<<<<<<< HEAD
+{/* <<<<<<< HEAD
 
 =======
->>>>>>> 50a29a7e2f057090e29b51fd9911922785291512
+>>>>>>> 50a29a7e2f057090e29b51fd9911922785291512 */}
       <div className="flex-1 p-10">
 
         <h1 className="text-4xl font-bold text-red-500 mb-10">
