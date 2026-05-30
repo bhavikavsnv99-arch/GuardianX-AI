@@ -67,7 +67,7 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-red-950 text-white flex flex-col">
+    <div className="min-h-screen bg-linear-to-br from-black via-gray-900 to-red-950 text-white flex flex-col">
 
       {/* Header */}
       <div className="border-b border-gray-800 p-6 flex items-center justify-between">

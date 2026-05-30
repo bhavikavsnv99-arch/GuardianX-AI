@@ -10,10 +10,6 @@ export default function Home() {
         AI Emergency & Safety Assistant
       </p>
 
-      <button className="mt-8 bg-red-500 px-6 py-3 rounded-xl hover:bg-red-700">
-        Report Emergency
-      </button>
-
     </div>
   );
 }
