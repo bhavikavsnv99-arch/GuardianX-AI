@@ -1,32 +1,28 @@
 from fastapi import APIRouter
+
 from app.schemas.emergency_schema import EmergencyRequest
-from ai_module.agents.emergency_agent import analyze_emergency
-from app.database.mongodb import db
-from datetime import datetime
+from app.services.emergency_service import analyze_emergency
+from app.services.chat_service import chat_with_ai
 
-router = APIRouter()
+router = APIRouter(
+    prefix="/ai",
+    tags=["AI"]
+)
 
+# Emergency Analysis Route
 @router.post("/analyze")
-def analyze(data: EmergencyRequest):
+async def analyze(data: EmergencyRequest):
 
     result = analyze_emergency(data.message)
 
-    severity = "LOW"
+    return result
 
-    if "high" in result.lower():
-        severity = "HIGH"
 
-    elif "medium" in result.lower():
-        severity = "MEDIUM"
+# AI Chat Route
+@router.post("/chat")
+async def chat(data: EmergencyRequest):
 
-    timestamp = datetime.now()
-
-    db.emergencies.insert_one({
-        "user_message": data.message,
-        "ai_response": result,
-        "severity": severity,
-        "timestamp": timestamp
-    })
+    result = chat_with_ai(data.message)
 
     return {
         "response": result

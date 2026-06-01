@@ -1,20 +1,28 @@
+import json
 from ai_module.services.gemini_service import ask_gemini
 
 
 def analyze_emergency(user_input):
 
     prompt = f"""
-You are GuardianX AI.
+You are GuardianX AI, an emergency response assistant.
 
-Analyze this emergency:
+Analyze the emergency below.
 
+User Message:
 {user_input}
 
-Provide:
-1. Threat Level
-2. Immediate Actions
-3. Risks
-4. Safety Advice
+Return ONLY valid JSON.
+
+{{
+    "emergency_type": "",
+    "severity": "",
+    "immediate_actions": [],
+    "service_required": "",
+    "summary": ""
+}}
 """
 
-    return ask_gemini(prompt)
+    response = ask_gemini(prompt)
+
+    return json.loads(response)
