@@ -1,10 +1,13 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
 
-from ai_module.agents.emergency_agent import analyze_emergency
+from app.routers.ai_router import router as ai_router
+from app.routers.auth_router import router as auth_router
+from app.routers.history_router import router as history_router
 
-app = FastAPI()
+app = FastAPI(
+    title="GuardianX-AI Backend"
+)
 
 # Enable CORS
 app.add_middleware(
@@ -15,23 +18,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Request model
-class ChatRequest(BaseModel):
-    message: str
-
+# Include Routers
+app.include_router(ai_router)
+app.include_router(auth_router)
+app.include_router(history_router)
 
 # Home Route
 @app.get("/")
 async def home():
+
     return {
         "message": "GuardianX-AI Backend Running"
     }
-
-
-# Emergency AI Route
-@app.post("/analyze")
-async def analyze(data: ChatRequest):
-
-    result = analyze_emergency(data.message)
-
-    return result

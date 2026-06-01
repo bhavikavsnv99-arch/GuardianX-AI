@@ -1,24 +1,28 @@
 from fastapi import APIRouter
-from app.database.mongodb import history_collection
 
-router = APIRouter()
+router = APIRouter(
+    prefix="/history",
+    tags=["History"]
+)
 
+# Dummy Emergency History
+history_data = [
+    {
+        "type": "Fire",
+        "location": "Mumbai",
+        "severity": "High"
+    },
+    {
+        "type": "Accident",
+        "location": "Delhi",
+        "severity": "Medium"
+    }
+]
 
-@router.get("/history")
-def get_history():
-
-    history = []
-
-    data = history_collection.find()
-
-    for item in data:
-
-        history.append({
-            "message": item["message"],
-            "response": item["response"],
-            "timestamp": item["timestamp"]
-        })
+# Get History
+@router.get("/")
+async def get_history():
 
     return {
-        "history": history
+        "history": history_data
     }
