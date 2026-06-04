@@ -6,10 +6,10 @@ from app.routers.auth_router import router as auth_router
 from app.routers.history_router import router as history_router
 
 app = FastAPI(
-    title="GuardianX-AI Backend"
+    title="GuardianX AI Backend",
+    version="1.0"
 )
 
-# Enable CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -18,15 +18,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Include Routers
 app.include_router(ai_router)
 app.include_router(auth_router)
 app.include_router(history_router)
 
-# Home Route
+
 @app.get("/")
-async def home():
+def home():
 
     return {
-        "message": "GuardianX-AI Backend Running"
+        "message": "GuardianX Backend Running"
     }

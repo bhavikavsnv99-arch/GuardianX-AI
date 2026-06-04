@@ -4,11 +4,12 @@ import os
 
 load_dotenv()
 
-print(os.getenv("GEMINI_API_KEY")) 
+client = genai.Client(
+    api_key=os.getenv("GEMINI_API_KEY")
+)
 
-client = genai.Client()
 
-def ask_gemini(prompt):
+def ask_gemini(prompt: str):
 
     try:
 
@@ -17,18 +18,24 @@ def ask_gemini(prompt):
             contents=prompt
         )
 
-        return response.text
+        return {
+            "success": True,
+            "response": response.text
+        }
 
     except Exception as e:
 
         print("Gemini Error:", e)
 
-        return """
-{
-  "emergency_type":"UNKNOWN",
-  "severity":"UNKNOWN",
-  "immediate_actions":["Contact emergency services immediately"],
-  "service_required":"Unknown",
-  "summary":"AI service temporarily unavailable"
-}
-"""
+        return {
+            "success": False,
+            "response": {
+                "emergency_type": "UNKNOWN",
+                "severity": "UNKNOWN",
+                "immediate_actions": [
+                    "Contact emergency services immediately"
+                ],
+                "service_required": "Unknown",
+                "summary": "AI service temporarily unavailable"
+            }
+        }

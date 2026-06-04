@@ -1,29 +1,59 @@
 from fastapi import APIRouter
+from pydantic import BaseModel
+from datetime import datetime
 
-from app.schemas.emergency_schema import EmergencyRequest
-from app.services.emergency_service import analyze_emergency
-from app.services.chat_service import chat_with_ai
+from ai_module.services.gemini_service import ask_gemini
+from app.database.mongodb import history_collection
 
-router = APIRouter(
-    prefix="/ai",
-    tags=["AI"]
-)
-
-# Emergency Analysis Route
-@router.post("/analyze")
-async def analyze(data: EmergencyRequest):
-
-    result = analyze_emergency(data.message)
-
-    return result
+router = APIRouter()
 
 
-# AI Chat Route
+class ChatRequest(BaseModel):
+    message: str
+
+
+EMERGENCY_KEYWORDS = [
+    "help",
+    "suicide",
+    "kill",
+    "emergency",
+    "danger",
+    "accident",
+    "blood",
+    "attack",
+    "hospital"
+]
+
+
+def detect_emergency(text: str):
+
+    text = text.lower()
+
+    for word in EMERGENCY_KEYWORDS:
+
+        if word in text:
+
+            return True
+
+    return False
+
+
 @router.post("/chat")
-async def chat(data: EmergencyRequest):
+def chat_with_ai(request: ChatRequest):
 
-    result = chat_with_ai(data.message)
+    emergency_detected = detect_emergency(request.message)
+
+    ai_response = ask_gemini(request.message)
+
+    history_collection.insert_one({
+        "user_message": request.message,
+        "ai_response": ai_response,
+        "emergency_detected": emergency_detected,
+        "timestamp": datetime.now()
+    })
 
     return {
-        "response": result
+        "success": True,
+        "emergency_detected": emergency_detected,
+        "data": ai_response
     }
