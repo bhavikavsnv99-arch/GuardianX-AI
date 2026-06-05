@@ -1,28 +1,18 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 
-router = APIRouter(
-    prefix="/history",
-    tags=["History"]
-)
+from app.database.mongodb import history_collection
+from app.services.auth_service import verify_token
 
-# Dummy Emergency History
-history_data = [
-    {
-        "type": "Fire",
-        "location": "Mumbai",
-        "severity": "High"
-    },
-    {
-        "type": "Accident",
-        "location": "Delhi",
-        "severity": "Medium"
-    }
-]
+router = APIRouter()
 
-# Get History
-@router.get("/")
-async def get_history():
+
+@router.get("/history")
+def get_history(user=Depends(verify_token)):
+
+    history = list(history_collection.find({}, {"_id": 0}))
 
     return {
-        "history": history_data
+        "success": True,
+        "user": user,
+        "history": history
     }

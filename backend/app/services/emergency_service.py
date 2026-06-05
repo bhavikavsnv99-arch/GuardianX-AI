@@ -1,24 +1,24 @@
-import os
+EMERGENCY_KEYWORDS = [
+    "help",
+    "suicide",
+    "kill",
+    "emergency",
+    "danger",
+    "accident",
+    "blood",
+    "attack",
+    "hospital"
+]
 
-from dotenv import load_dotenv
-from langchain_google_genai import ChatGoogleGenerativeAI
 
-# Load environment variables
-load_dotenv()
+def detect_emergency(text: str):
 
-# Debug check
-print("API KEY:", os.getenv("GEMINI_API_KEY"))
+    text = text.lower()
 
-# Gemini model
-llm = ChatGoogleGenerativeAI(
-    model="gemini-2.5-flash",
-    google_api_key=os.getenv("GEMINI_API_KEY")
-)
+    for word in EMERGENCY_KEYWORDS:
 
-def analyze_emergency(message):
+        if word in text:
 
-    response = llm.invoke(message)
+            return True
 
-    return {
-        "response": response.content
-    }
+    return False

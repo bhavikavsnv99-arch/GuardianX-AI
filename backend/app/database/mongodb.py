@@ -5,9 +5,11 @@ import os
 load_dotenv()
 
 MONGO_URL = os.getenv("MONGO_URL")
+DATABASE_NAME = os.getenv("DATABASE_NAME")
 
 client = MongoClient(MONGO_URL)
 
-db = client["guardianx_db"]
+db = client[DATABASE_NAME]
 
-history_collection = db["emergency_history"]
+users_collection = db["users"]
+history_collection = db["history"]
