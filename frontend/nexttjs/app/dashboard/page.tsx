@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import Sidebar from "@/components/GuardianSidebar";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 import {
   AlertTriangle,
@@ -27,6 +29,19 @@ import {
 } from "recharts";
 
 export default function DashboardPage() {
+   const router = useRouter();
+
+  useEffect(() => {
+
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+
+      router.push("/login");
+
+    }
+
+  }, [router]);
   const emergencyData = [
     { name: "Fire", cases: 12 },
     { name: "Medical", cases: 10 },
@@ -41,7 +56,7 @@ export default function DashboardPage() {
   ];
 
   const COLORS = ["#06b6d4", "#f59e0b", "#22c55e"];
-
+  
   const alerts = [
     {
       title: "Fire Emergency",

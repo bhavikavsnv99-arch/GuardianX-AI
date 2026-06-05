@@ -4,6 +4,7 @@ from datetime import datetime
 
 from ai_module.services.gemini_service import ask_gemini
 from app.database.mongodb import history_collection
+from ai_module.agents.emergency_agent import analyze_emergency
 
 router = APIRouter()
 
@@ -43,8 +44,7 @@ def chat_with_ai(request: ChatRequest):
 
     emergency_detected = detect_emergency(request.message)
 
-    ai_response = ask_gemini(request.message)
-
+    ai_response = analyze_emergency(request.message)
     history_collection.insert_one({
         "user_message": request.message,
         "ai_response": ai_response,

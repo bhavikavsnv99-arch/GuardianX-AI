@@ -1,107 +1,224 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+
 import {
-  Home,
   LayoutDashboard,
   MessageCircle,
-  MapPinned,
   Bell,
+  Shield,
   User,
-  FileWarning,
+  MapPinned,
+  LogOut,
 } from "lucide-react";
 
-export default function Sidebar() {
+export default function GuardianSidebar() {
+
+  const router = useRouter();
+
+  const handleLogout = () => {
+
+    localStorage.removeItem("token");
+
+    router.push("/login");
+
+  };
+
   return (
-    <aside className="w-72 min-h-screen bg-slate-900 border-r border-slate-800 flex flex-col">
+    <aside
+      className="
+        w-72
+        min-h-screen
+        bg-[#0B0F17]
+        border-r
+        border-white/5
+        p-8
+        hidden
+        lg:flex
+        flex-col
+        justify-between
+      "
+    >
 
-      {/* Logo */}
-      <div className="p-8 border-b border-slate-800">
-        <h1 className="text-3xl font-bold text-white">
-          Guardian<span className="text-cyan-400">X</span>
-        </h1>
+      <div>
 
-        <p className="text-slate-400 text-sm mt-2">
-          Emergency Response Platform
-        </p>
+        {/* Logo */}
+        <div>
+
+          <h1
+            className="
+              text-3xl
+              font-bold
+              text-white
+            "
+          >
+            Guardian
+            <span className="text-violet-400">
+              X
+            </span>
+          </h1>
+
+          <p
+            className="
+              text-slate-500
+              text-sm
+              mt-3
+            "
+          >
+            AI Emergency Platform
+          </p>
+
+        </div>
+
+        {/* Navigation */}
+        <nav
+          className="
+            mt-14
+            flex
+            flex-col
+            gap-3
+          "
+        >
+
+          {[
+            {
+              icon: LayoutDashboard,
+              title: "Dashboard",
+              href: "/dashboard",
+            },
+            {
+              icon: MessageCircle,
+              title: "AI Chat",
+              href: "/chat",
+            },
+            {
+              icon: MapPinned,
+              title: "Emergency Map",
+              href: "/map",
+            },
+            {
+              icon: Bell,
+              title: "History",
+              href: "/history",
+            },
+            {
+              icon: Bell,
+              title: "Notifications",
+              href: "/notifications",
+            },
+            {
+              icon: Shield,
+              title: "Threat Center",
+              href: "/threats",
+            },
+            {
+              icon: User,
+              title: "Profile",
+              href: "/profile",
+            },
+          ].map((item, index) => (
+
+            <Link
+              key={index}
+              href={item.href}
+              className="
+                flex
+                items-center
+                gap-4
+                px-5
+                py-4
+                rounded-2xl
+                text-slate-400
+                hover:bg-white/[0.04]
+                hover:text-white
+                transition-all
+              "
+            >
+
+              <item.icon size={20} />
+
+              {item.title}
+
+            </Link>
+
+          ))}
+
+        </nav>
+
       </div>
 
-      {/* Navigation */}
-      <nav className="flex-1 p-6">
+      {/* Bottom Section */}
+      <div className="space-y-4">
 
-        <div className="space-y-3">
+        {/* Status Card */}
+        <div
+          className="
+            rounded-3xl
+            border
+            border-white/5
+            bg-white/[0.03]
+            p-6
+          "
+        >
 
-          <Link
-            href="/"
-            className="flex items-center gap-4 rounded-xl p-4 text-slate-300 hover:bg-slate-800 hover:text-cyan-400 transition"
+          <div className="flex items-center gap-3">
+
+            <div
+              className="
+                w-3
+                h-3
+                rounded-full
+                bg-green-400
+              "
+            />
+
+            <p className="text-sm text-slate-300">
+              AI Systems Online
+            </p>
+
+          </div>
+
+          <p
+            className="
+              text-sm
+              text-slate-500
+              mt-4
+              leading-7
+            "
           >
-            <Home size={22} />
-            Home
-          </Link>
-
-          <Link
-            href="/dashboard"
-            className="flex items-center gap-4 rounded-xl p-4 text-slate-300 hover:bg-slate-800 hover:text-cyan-400 transition"
-          >
-            <LayoutDashboard size={22} />
-            Dashboard
-          </Link>
-
-          <Link
-            href="/chat"
-            className="flex items-center gap-4 rounded-xl p-4 text-slate-300 hover:bg-slate-800 hover:text-cyan-400 transition"
-          >
-            <MessageCircle size={22} />
-            AI Chat
-          </Link>
-
-          <Link
-            href="/map"
-            className="flex items-center gap-4 rounded-xl p-4 text-slate-300 hover:bg-slate-800 hover:text-cyan-400 transition"
-          >
-            <MapPinned size={22} />
-            Emergency Map
-          </Link>
-
-          <Link
-            href="/notifications"
-            className="flex items-center gap-4 rounded-xl p-4 text-slate-300 hover:bg-slate-800 hover:text-cyan-400 transition"
-          >
-            <Bell size={22} />
-            Notifications
-          </Link>
-
-          <Link
-            href="/report"
-            className="flex items-center gap-4 rounded-xl p-4 text-slate-300 hover:bg-slate-800 hover:text-cyan-400 transition"
-          >
-            <FileWarning size={22} />
-            Reports
-          </Link>
-
-          <Link
-            href="/profile"
-            className="flex items-center gap-4 rounded-xl p-4 text-slate-300 hover:bg-slate-800 hover:text-cyan-400 transition"
-          >
-            <User size={22} />
-            Profile
-          </Link>
-
-        </div>
-
-      </nav>
-
-      {/* Bottom User Card */}
-      <div className="p-6 border-t border-slate-800">
-        <div className="rounded-2xl bg-slate-800 p-4">
-          <h3 className="font-semibold text-white">
-            Emergency Operator
-          </h3>
-
-          <p className="text-sm text-slate-400 mt-1">
-            Active Monitoring Session
+            All emergency monitoring systems are active and operational.
           </p>
+
         </div>
+
+        {/* Logout Button */}
+        <button
+          onClick={handleLogout}
+          className="
+            w-full
+            flex
+            items-center
+            justify-center
+            gap-3
+            px-5
+            py-4
+            rounded-2xl
+            bg-red-500/10
+            border
+            border-red-500/20
+            text-red-400
+            hover:bg-red-500/20
+            transition-all
+          "
+        >
+
+          <LogOut size={18} />
+
+          Logout
+
+        </button>
+
       </div>
 
     </aside>

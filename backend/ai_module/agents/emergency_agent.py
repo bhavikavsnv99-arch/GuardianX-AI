@@ -1,6 +1,8 @@
 import json
+
 from ai_module.services.gemini_service import ask_gemini
 from ai_module.agents.fallback_agent import fallback_analysis
+
 
 def analyze_emergency(user_input):
 
@@ -30,10 +32,14 @@ Return JSON only.
     response = ask_gemini(prompt)
 
     try:
-        return json.loads(response)
 
-    except Exception:
+        return json.loads(
+            response["response"]
+        )
 
-     print("Gemini failed. Using fallback engine.")
+    except Exception as e:
 
-    return fallback_analysis(user_input)
+        print("Gemini failed:", e)
+        print("Raw response:", response)
+
+        return fallback_analysis(user_input)
