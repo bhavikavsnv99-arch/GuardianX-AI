@@ -1,31 +1,28 @@
 "use client";
 
 import { useState } from "react";
-import axios from "axios";
+import Sidebar from "@/components/GuardianSidebar";
+import { Send, Bot, User } from "lucide-react";
 
 type Message = {
-  sender: string;
+  sender: "user" | "ai";
   text: string;
 };
 
 export default function ChatPage() {
-
   const [messages, setMessages] = useState<Message[]>([
     {
       sender: "ai",
-      text: "Hello 👋 I am GuardianX-AI. How can I help you today?",
+      text: "Hello! I am GuardianX AI. Describe your emergency or safety concern and I will assist you.",
     },
   ]);
 
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Send Message
   const sendMessage = async () => {
-
     if (!input.trim()) return;
 
-    // User Message
     const userMessage: Message = {
       sender: "user",
       text: input,
@@ -33,187 +30,194 @@ export default function ChatPage() {
 
     setMessages((prev) => [...prev, userMessage]);
 
+    const userInput = input;
+
+    setInput("");
     setLoading(true);
 
-    try {
+    // MOCK MODE
+    // Replace later with backend /chat API
 
-      const response = await axios.post(
-        "http://127.0.0.1:8000/analyze",
-        {
-          message: input,
-        }
-      );
-
-      // AI Message
+    setTimeout(() => {
       const aiMessage: Message = {
         sender: "ai",
-        text: response.data.response,
+        text: `Emergency analysis completed.
+
+Situation:
+${userInput}
+
+Recommended Action:
+• Stay calm
+• Contact emergency services if needed
+• Move to a safe location
+• Continue monitoring the situation
+
+GuardianX AI assessment generated successfully.`,
       };
 
       setMessages((prev) => [...prev, aiMessage]);
-
-    } catch {
-
-      const errorMessage: Message = {
-        sender: "ai",
-        text: "❌ Error connecting to backend",
-      };
-
-      setMessages((prev) => [...prev, errorMessage]);
-    }
-
-    setInput("");
-    setLoading(false);
+      setLoading(false);
+    }, 1200);
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-black via-gray-900 to-red-950 text-white flex flex-col">
+    <div className="flex min-h-screen bg-slate-950 text-white">
 
-      {/* Header */}
-      <div className="border-b border-gray-800 p-6 flex items-center justify-between">
+      <Sidebar />
 
-        <div>
+      <main className="flex-1 flex flex-col">
 
-          <h1 className="text-4xl font-bold text-red-500">
-            GuardianX-AI
-          </h1>
+        {/* Header */}
+        <div className="border-b border-slate-800 px-8 py-6 bg-slate-900">
 
-          <p className="text-gray-400 mt-2">
-            Emergency & Safety Assistant
-          </p>
+          <div className="flex items-center justify-between">
+
+            <div>
+
+              <h1 className="text-4xl font-bold">
+                GuardianX{" "}
+                <span className="text-cyan-400">
+                  AI Assistant
+                </span>
+              </h1>
+
+              <p className="text-slate-400 mt-2">
+                AI-powered emergency response and safety guidance
+              </p>
+
+            </div>
+
+            <div className="px-4 py-2 rounded-full bg-cyan-500/20 border border-cyan-500 text-cyan-400 text-sm font-semibold">
+              AI ONLINE
+            </div>
+
+          </div>
 
         </div>
 
-        <div className="bg-red-500 px-4 py-2 rounded-full text-sm font-semibold shadow-lg animate-pulse">
-          AI ONLINE
-        </div>
+        {/* Messages */}
+        <div className="flex-1 overflow-y-auto p-8 space-y-6">
 
-      </div>
+          {messages.map((message, index) => (
 
-      {/* Chat Messages */}
-      <div className="flex-1 overflow-y-auto p-6 space-y-6">
-
-        {messages.map((msg, index) => (
-
-          <div
-            key={index}
-            className={`
-              flex
-              ${
-                msg.sender === "user"
+            <div
+              key={index}
+              className={`flex ${
+                message.sender === "user"
                   ? "justify-end"
                   : "justify-start"
-              }
-            `}
-          >
-
-            <div
-              className={`
-                max-w-2xl
-                px-6
-                py-4
-                rounded-3xl
-                shadow-2xl
-                whitespace-pre-wrap
-                text-lg
-                transition-all
-                duration-300
-                ${
-                  msg.sender === "user"
-                    ? "bg-red-500 rounded-br-none"
-                    : "bg-gray-800 border border-gray-700 rounded-bl-none"
-                }
-              `}
+              }`}
             >
 
-              {msg.text}
+              <div
+                className={`max-w-3xl rounded-2xl px-6 py-4 shadow-lg ${
+                  message.sender === "user"
+                    ? "bg-cyan-500 text-black"
+                    : "bg-slate-900 border border-slate-800"
+                }`}
+              >
+
+                <div className="flex items-center gap-2 mb-3">
+
+                  {message.sender === "user" ? (
+                    <User size={18} />
+                  ) : (
+                    <Bot
+                      size={18}
+                      className="text-cyan-400"
+                    />
+                  )}
+
+                  <span className="font-semibold">
+                    {message.sender === "user"
+                      ? "You"
+                      : "GuardianX AI"}
+                  </span>
+
+                </div>
+
+                <p className="whitespace-pre-wrap">
+                  {message.text}
+                </p>
+
+              </div>
 
             </div>
 
-          </div>
+          ))}
 
-        ))}
+          {loading && (
 
-        {/* Loading */}
-        {loading && (
+            <div className="flex justify-start">
 
-          <div className="flex justify-start">
+              <div className="bg-slate-900 border border-slate-800 rounded-2xl px-6 py-4 animate-pulse">
 
-            <div
-              className="
-                bg-gray-800
-                border
-                border-gray-700
-                px-6
-                py-4
-                rounded-3xl
-                rounded-bl-none
-                animate-pulse
-              "
-            >
+                GuardianX AI is analyzing the situation...
 
-              AI is analyzing emergency...
+              </div>
 
             </div>
 
-          </div>
-
-        )}
-
-      </div>
-
-      {/* Input Section */}
-      <div className="border-t border-gray-800 bg-black/40 backdrop-blur-md p-6">
-
-        <div className="flex gap-4">
-
-          {/* Input */}
-          <input
-            type="text"
-            placeholder="Describe your emergency..."
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                sendMessage();
-              }
-            }}
-            className="
-              flex-1
-              bg-gray-800
-              border
-              border-gray-700
-              p-4
-              rounded-2xl
-              outline-none
-              text-white
-              placeholder-gray-400
-              focus:border-red-500
-              transition-all
-            "
-          />
-
-          {/* Send Button */}
-          <button
-            onClick={sendMessage}
-            className="
-              bg-red-500
-              hover:bg-red-700
-              px-8
-              rounded-2xl
-              font-bold
-              shadow-lg
-              transition-all
-              duration-300
-              hover:scale-105
-            "
-          >
-            Send
-          </button>
+          )}
 
         </div>
 
-      </div>
+        {/* Input */}
+        <div className="border-t border-slate-800 bg-slate-900 p-6">
+
+          <div className="flex gap-4">
+
+            <input
+              type="text"
+              value={input}
+              placeholder="Describe an emergency or ask a safety question..."
+              onChange={(e) =>
+                setInput(e.target.value)
+              }
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  sendMessage();
+                }
+              }}
+              className="
+                flex-1
+                bg-slate-800
+                border
+                border-slate-700
+                rounded-xl
+                px-5
+                py-4
+                text-white
+                outline-none
+                focus:border-cyan-400
+              "
+            />
+
+            <button
+              onClick={sendMessage}
+              disabled={loading}
+              className="
+                bg-cyan-500
+                hover:bg-cyan-600
+                text-black
+                font-semibold
+                px-6
+                rounded-xl
+                transition
+                flex
+                items-center
+                gap-2
+              "
+            >
+              <Send size={18} />
+              Send
+            </button>
+
+          </div>
+
+        </div>
+
+      </main>
 
     </div>
   );
