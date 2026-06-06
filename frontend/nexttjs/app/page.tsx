@@ -9,7 +9,7 @@ import {
 
 export default function HomePage() {
   return (
-    <main className="bg-[#06070A] text-white overflow-hidden">
+    <main className="bg-[#4b5163] text-white overflow-hidden">
 
       {/* BACKGROUND */}
       <div className="fixed inset-0 -z-10">
