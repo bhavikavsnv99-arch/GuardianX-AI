@@ -1,4 +1,7 @@
+"use client";
 import Link from "next/link";
+import { motion } from "framer-motion";
+
 import {
   ArrowRight,
   Shield,
@@ -6,40 +9,25 @@ import {
   MapPinned,
   Siren,
 } from "lucide-react";
+import AnimatedBackground from "@/components/AnimatedBackground";
+import RadioWaves from "@/components/RadioWaves";
+import FloatingParticles from "@/components/FloatingParticles";
 
 export default function HomePage() {
   return (
-    <main className="bg-[#06070A] text-white overflow-hidden">
+  <main className="relative z-10 text-white overflow-hidden">
 
-      {/* BACKGROUND */}
-      <div className="fixed inset-0 -z-10">
-
-        <div className="
-          absolute
-          top-[-250px]
-          left-[-250px]
-          w-[700px]
-          h-[700px]
-          bg-violet-600/20
-          blur-[180px]
-          rounded-full
-        " />
-
-        <div className="
-          absolute
-          bottom-[-250px]
-          right-[-250px]
-          w-[700px]
-          h-[700px]
-          bg-blue-600/20
-          blur-[180px]
-          rounded-full
-        " />
-
-      </div>
+  {/* BACKGROUND SYSTEM */}
+       <AnimatedBackground /> 
+ <FloatingParticles /> 
 
       {/* HERO */}
-      <section className="min-h-screen flex items-center px-6">
+     <section className="min-h-screen flex items-center justify-center px-6 relative">
+
+          {/* CENTER EFFECT */}
+           <RadioWaves /> 
+
+       
 
         <div className="
           max-w-7xl
@@ -49,124 +37,183 @@ export default function HomePage() {
           gap-24
           items-center
           w-full
+          relative
+          z-10
         ">
 
-          {/* LEFT */}
-          <div>
+         {/* LEFT */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+          >
 
-            <div className="
-              inline-flex
-              items-center
-              gap-3
-              px-5
-              py-3
-              rounded-full
-              bg-white/5
-              border
-              border-white/10
-              text-sm
-              text-slate-300
-              backdrop-blur-xl
-            ">
-
-              <div className="
-                w-2
-                h-2
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+              className="
+                inline-flex
+                items-center
+                gap-3
+                px-5
+                py-3
                 rounded-full
-                bg-violet-400
-                animate-pulse
-              " />
+                bg-white/5
+                border
+                border-white/10
+                text-sm
+                text-slate-300
+                backdrop-blur-xl
+              "
+            >
+
+              <div
+                className="
+                  w-2
+                  h-2
+                  rounded-full
+                  bg-violet-400
+                  animate-pulse
+                "
+              />
 
               Enterprise AI Emergency Platform
 
-            </div>
+            </motion.div>
 
-            <h1 className="
-              mt-10
-              text-6xl
-              md:text-7xl
-              font-bold
-              leading-[1.05]
-              tracking-[-0.04em]
-            ">
+            <motion.h1
+              initial={{ opacity: 0, y: 60 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.8 }}
+              className="
+                mt-10
+                text-6xl
+                md:text-7xl
+                font-bold
+                leading-[1.05]
+                tracking-[-0.04em]
+              "
+            >
 
-              Intelligent
+             GuardianX AI
               <br />
 
-              <span className="
-                bg-gradient-to-r
-                from-violet-400
-                to-blue-400
-                text-transparent
-                bg-clip-text
-              ">
+              <span
+                className="
+                  bg-gradient-to-r
+                  from-violet-400
+                  to-blue-400
+                  text-transparent
+                  bg-clip-text
+                "
+              >
                 Emergency Intelligence
               </span>
 
-            </h1>
+            </motion.h1>
 
-            <p className="
-              mt-8
-              text-lg
-              leading-8
-              text-slate-400
-              max-w-xl
-            ">
+            <motion.p
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.8 }}
+              className="
+                mt-8
+                text-lg
+                leading-8
+                text-slate-400
+                max-w-xl
+              "
+            >
               GuardianX transforms emergency response with AI-driven
               incident analysis, real-time monitoring, predictive alerts,
               and operational command systems.
-            </p>
+            </motion.p>
 
-            <div className="mt-12 flex flex-wrap gap-5">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7, duration: 0.8 }}
+              className="mt-12 flex flex-wrap gap-5"
+            >
 
-              <Link
-                href="/signup"
+              <motion.div whileHover={{ scale: 1.05 }}>
+                <Link
+                  href="/signup"
+                  className="
+                    px-8
+                    py-4
+                    rounded-2xl
+                    bg-gradient-to-r
+                    from-violet-600
+                    to-blue-600
+                    transition-all
+                    duration-300
+                    font-medium
+                    flex
+                    items-center
+                    gap-2
+                    shadow-[0_0_40px_rgba(124,58,237,0.35)]
+                  "
+                >
+                  Get Started
+                  <ArrowRight size={18} />
+                </Link>
+              </motion.div>
+
+              <motion.div whileHover={{ scale: 1.05 }}>
+                <Link
+                  href="/dashboard"
                 className="
-                  px-8
-                  py-4
-                  rounded-2xl
-                  bg-gradient-to-r
-                  from-violet-600
-                  to-blue-600
-                  hover:scale-105
-                  transition-all
-                  duration-300
-                  font-medium
-                  flex
-                  items-center
-                  gap-2
-                  shadow-[0_0_40px_rgba(124,58,237,0.35)]
-                "
-              >
-                Get Started
-                <ArrowRight size={18} />
-              </Link>
+            px-8
+            py-4
+            rounded-2xl
+            border
+            border-white/10
+            bg-white/5
+            hover:bg-white/10
+            transition-all
+            backdrop-blur-xl
 
-              <Link
-                href="/dashboard"
-                className="
-                  px-8
-                  py-4
-                  rounded-2xl
-                  border
-                  border-white/10
-                  bg-white/5
-                  hover:bg-white/10
-                  transition-all
-                  backdrop-blur-xl
-                "
-              >
-                Explore Platform
-              </Link>
+            flex
+            items-center
+            justify-center
+          "
+                >
+                  Explore Platform
+                </Link>
+              </motion.div>
 
-            </div>
+            </motion.div>
 
-          </div>
+          </motion.div>
 
-          {/* RIGHT */}
-          <div className="relative">
-
-            <div className="
+                    {/* RIGHT */}
+                    {/* RIGHT */}
+          <motion.div
+            className="relative"
+            initial={{
+              opacity: 0,
+              x: 100,
+            }}
+            animate={{
+              opacity: 1,
+              x: 0,
+            }}
+            transition={{
+              duration: 1,
+              delay: 0.4,
+            }}
+          >
+                    <motion.div
+            whileHover={{
+              scale: 1.015,
+            }}
+            transition={{
+              type: "spring",
+              stiffness: 220,
+            }}
+            className="
               rounded-[36px]
               bg-white/[0.04]
               border
@@ -174,7 +221,8 @@ export default function HomePage() {
               backdrop-blur-2xl
               p-8
               shadow-[0_0_80px_rgba(124,58,237,0.15)]
-            ">
+            "
+          >
 
               <div className="flex items-center justify-between mb-8">
 
@@ -222,9 +270,25 @@ export default function HomePage() {
                   },
                 ].map((item, index) => (
 
-                  <div
-                    key={index}
-                    className="
+                  <motion.div
+                      key={index}
+                      initial={{
+                        opacity: 0,
+                        x: 40,
+                      }}
+                      animate={{
+                        opacity: 1,
+                        x: 0,
+                      }}
+                      transition={{
+                        delay: 1 + index * 0.2,
+                        duration: 0.5,
+                      }}
+                      whileHover={{
+                        scale: 1.02,
+                        x: 8,
+                      }}
+                      className="
                       rounded-2xl
                       bg-[#0F172A]/70
                       border
@@ -267,15 +331,15 @@ export default function HomePage() {
                       LIVE
                     </span>
 
-                  </div>
+                  </motion.div>
 
                 ))}
 
               </div>
 
-            </div>
+            </motion.div>
 
-          </div>
+         </motion.div>
 
         </div>
 
