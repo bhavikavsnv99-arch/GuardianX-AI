@@ -1,73 +1,279 @@
 import Link from "next/link";
+import {
+  ArrowRight,
+  Shield,
+  Brain,
+  MapPinned,
+  Siren,
+} from "lucide-react";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <main className="min-h-screen bg-slate-950 text-white">
+    <main className="bg-[#06070A] text-white overflow-hidden">
 
-      {/* Navbar */}
-      <nav className="border-b border-slate-800">
-        <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+      {/* BACKGROUND */}
+      <div className="fixed inset-0 -z-10">
 
-          <h1 className="text-2xl font-bold">
-            Guardian<span className="text-cyan-400">X</span> AI
-          </h1>
+        <div className="
+          absolute
+          top-[-250px]
+          left-[-250px]
+          w-[700px]
+          h-[700px]
+          bg-violet-600/20
+          blur-[180px]
+          rounded-full
+        " />
 
-          <div className="flex gap-4">
-            <Link
-              href="/login"
-              className="px-5 py-2 rounded-lg border border-slate-700 hover:bg-slate-800 transition"
-            >
-              Login
-            </Link>
+        <div className="
+          absolute
+          bottom-[-250px]
+          right-[-250px]
+          w-[700px]
+          h-[700px]
+          bg-blue-600/20
+          blur-[180px]
+          rounded-full
+        " />
 
-            <Link
-              href="/signup"
-              className="px-5 py-2 rounded-lg bg-cyan-500 hover:bg-cyan-600 transition"
-            >
-              Get Started
-            </Link>
+      </div>
+
+      {/* HERO */}
+      <section className="min-h-screen flex items-center px-6">
+
+        <div className="
+          max-w-7xl
+          mx-auto
+          grid
+          lg:grid-cols-2
+          gap-24
+          items-center
+          w-full
+        ">
+
+          {/* LEFT */}
+          <div>
+
+            <div className="
+              inline-flex
+              items-center
+              gap-3
+              px-5
+              py-3
+              rounded-full
+              bg-white/5
+              border
+              border-white/10
+              text-sm
+              text-slate-300
+              backdrop-blur-xl
+            ">
+
+              <div className="
+                w-2
+                h-2
+                rounded-full
+                bg-violet-400
+                animate-pulse
+              " />
+
+              Enterprise AI Emergency Platform
+
+            </div>
+
+            <h1 className="
+              mt-10
+              text-6xl
+              md:text-7xl
+              font-bold
+              leading-[1.05]
+              tracking-[-0.04em]
+            ">
+
+              Intelligent
+              <br />
+
+              <span className="
+                bg-gradient-to-r
+                from-violet-400
+                to-blue-400
+                text-transparent
+                bg-clip-text
+              ">
+                Emergency Intelligence
+              </span>
+
+            </h1>
+
+            <p className="
+              mt-8
+              text-lg
+              leading-8
+              text-slate-400
+              max-w-xl
+            ">
+              GuardianX transforms emergency response with AI-driven
+              incident analysis, real-time monitoring, predictive alerts,
+              and operational command systems.
+            </p>
+
+            <div className="mt-12 flex flex-wrap gap-5">
+
+              <Link
+                href="/signup"
+                className="
+                  px-8
+                  py-4
+                  rounded-2xl
+                  bg-gradient-to-r
+                  from-violet-600
+                  to-blue-600
+                  hover:scale-105
+                  transition-all
+                  duration-300
+                  font-medium
+                  flex
+                  items-center
+                  gap-2
+                  shadow-[0_0_40px_rgba(124,58,237,0.35)]
+                "
+              >
+                Get Started
+                <ArrowRight size={18} />
+              </Link>
+
+              <Link
+                href="/dashboard"
+                className="
+                  px-8
+                  py-4
+                  rounded-2xl
+                  border
+                  border-white/10
+                  bg-white/5
+                  hover:bg-white/10
+                  transition-all
+                  backdrop-blur-xl
+                "
+              >
+                Explore Platform
+              </Link>
+
+            </div>
+
           </div>
 
-        </div>
-      </nav>
+          {/* RIGHT */}
+          <div className="relative">
 
-      {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-6 py-28">
+            <div className="
+              rounded-[36px]
+              bg-white/[0.04]
+              border
+              border-white/10
+              backdrop-blur-2xl
+              p-8
+              shadow-[0_0_80px_rgba(124,58,237,0.15)]
+            ">
 
-        <div className="text-center">
+              <div className="flex items-center justify-between mb-8">
 
-          <div className="inline-block mb-6 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-5 py-2 text-cyan-300">
-            AI Powered Emergency Response Platform
-          </div>
+                <div>
 
-          <h1 className="text-6xl md:text-7xl font-bold leading-tight">
-            Smart Emergency
-            <br />
-            Response With
-            <span className="text-cyan-400"> AI</span>
-          </h1>
+                  <p className="text-sm text-slate-400">
+                    Live Operations
+                  </p>
 
-          <p className="max-w-3xl mx-auto mt-8 text-xl text-slate-400">
-            Monitor incidents, analyze emergencies, visualize locations,
-            generate reports and receive AI-powered guidance through a
-            unified response platform.
-          </p>
+                  <h2 className="text-2xl font-semibold mt-2">
+                    Emergency Monitoring
+                  </h2>
 
-          <div className="mt-12 flex flex-col sm:flex-row justify-center gap-4">
+                </div>
 
-            <Link
-              href="/signup"
-              className="bg-cyan-500 hover:bg-cyan-600 transition px-8 py-4 rounded-xl font-semibold"
-            >
-              Start Monitoring
-            </Link>
+                <div className="
+                  px-4
+                  py-2
+                  rounded-full
+                  bg-violet-500/10
+                  border
+                  border-violet-500/20
+                  text-violet-300
+                  text-sm
+                ">
+                  ACTIVE
+                </div>
 
-            <Link
-              href="/login"
-              className="border border-slate-700 hover:bg-slate-800 transition px-8 py-4 rounded-xl font-semibold"
-            >
-              Login Dashboard
-            </Link>
+              </div>
+
+              <div className="space-y-5">
+
+                {[
+                  {
+                    title: "Fire Emergency",
+                    location: "Industrial Zone",
+                  },
+                  {
+                    title: "Medical Response",
+                    location: "Metro Hospital",
+                  },
+                  {
+                    title: "Threat Detection",
+                    location: "Central District",
+                  },
+                ].map((item, index) => (
+
+                  <div
+                    key={index}
+                    className="
+                      rounded-2xl
+                      bg-[#0F172A]/70
+                      border
+                      border-white/5
+                      p-5
+                      flex
+                      items-center
+                      justify-between
+                      hover:border-violet-500/30
+                      transition-all
+                    "
+                  >
+
+                    <div className="flex items-center gap-4">
+
+                      <div className="
+                        w-3
+                        h-3
+                        rounded-full
+                        bg-gradient-to-r
+                        from-violet-400
+                        to-blue-400
+                      " />
+
+                      <div>
+
+                        <h3 className="font-medium">
+                          {item.title}
+                        </h3>
+
+                        <p className="text-sm text-slate-400 mt-1">
+                          {item.location}
+                        </p>
+
+                      </div>
+
+                    </div>
+
+                    <span className="text-xs text-slate-500">
+                      LIVE
+                    </span>
+
+                  </div>
+
+                ))}
+
+              </div>
+
+            </div>
 
           </div>
 
@@ -75,100 +281,122 @@ export default function Home() {
 
       </section>
 
-      {/* Stats */}
-      <section className="max-w-7xl mx-auto px-6 pb-24">
+      {/* FEATURES */}
+      <section className="py-32 px-6">
 
-        <div className="grid md:grid-cols-4 gap-6">
+        <div className="max-w-7xl mx-auto">
 
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-8 text-center">
-            <h3 className="text-4xl font-bold text-cyan-400">24/7</h3>
-            <p className="mt-2 text-slate-400">
-              Monitoring
+          <div className="text-center mb-24">
+
+            <p className="
+              uppercase
+              tracking-[0.35em]
+              text-sm
+              text-violet-400
+            ">
+              PLATFORM CAPABILITIES
             </p>
+
+            <h2 className="
+              mt-6
+              text-5xl
+              font-bold
+              tracking-tight
+            ">
+              Advanced AI Response Infrastructure
+            </h2>
+
           </div>
 
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-8 text-center">
-            <h3 className="text-4xl font-bold text-cyan-400">98%</h3>
-            <p className="mt-2 text-slate-400">
-              AI Accuracy
-            </p>
-          </div>
+          <div className="
+            grid
+            md:grid-cols-2
+            lg:grid-cols-4
+            gap-8
+          ">
 
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-8 text-center">
-            <h3 className="text-4xl font-bold text-cyan-400">100+</h3>
-            <p className="mt-2 text-slate-400">
-              Alerts Processed
-            </p>
-          </div>
+            {[
+              {
+                icon: Brain,
+                title: "AI Analysis",
+                desc: "Autonomous emergency understanding and response generation.",
+              },
+              {
+                icon: Shield,
+                title: "Threat Intelligence",
+                desc: "Continuous safety surveillance powered by AI systems.",
+              },
+              {
+                icon: MapPinned,
+                title: "Smart Mapping",
+                desc: "Live emergency routing and intelligent geospatial monitoring.",
+              },
+              {
+                icon: Siren,
+                title: "Rapid Alerts",
+                desc: "Mission-critical emergency notifications in real-time.",
+              },
+            ].map((feature, index) => (
 
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-8 text-center">
-            <h3 className="text-4xl font-bold text-cyan-400">Fast</h3>
-            <p className="mt-2 text-slate-400">
-              Response Support
-            </p>
+              <div
+                key={index}
+                className="
+                  group
+                  rounded-[28px]
+                  bg-white/[0.03]
+                  border
+                  border-white/10
+                  p-8
+                  backdrop-blur-2xl
+                  hover:border-violet-500/30
+                  hover:-translate-y-2
+                  transition-all
+                  duration-500
+                "
+              >
+
+                <div className="
+                  w-16
+                  h-16
+                  rounded-2xl
+                  bg-gradient-to-br
+                  from-violet-600
+                  to-blue-600
+                  flex
+                  items-center
+                  justify-center
+                  shadow-[0_0_40px_rgba(124,58,237,0.25)]
+                ">
+
+                  <feature.icon size={28} />
+
+                </div>
+
+                <h3 className="
+                  mt-8
+                  text-2xl
+                  font-semibold
+                ">
+                  {feature.title}
+                </h3>
+
+                <p className="
+                  mt-5
+                  text-slate-400
+                  leading-8
+                ">
+                  {feature.desc}
+                </p>
+
+              </div>
+
+            ))}
+
           </div>
 
         </div>
 
       </section>
-
-      {/* Features */}
-      <section className="max-w-7xl mx-auto px-6 pb-28">
-
-        <h2 className="text-4xl font-bold text-center mb-16">
-          Platform Features
-        </h2>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 hover:border-cyan-500 transition">
-            <h3 className="text-xl font-semibold mb-4">
-              AI Assistant
-            </h3>
-
-            <p className="text-slate-400">
-              Analyze incidents and receive intelligent emergency guidance.
-            </p>
-          </div>
-
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 hover:border-cyan-500 transition">
-            <h3 className="text-xl font-semibold mb-4">
-              Live Mapping
-            </h3>
-
-            <p className="text-slate-400">
-              Track emergency locations and visualize incidents.
-            </p>
-          </div>
-
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 hover:border-cyan-500 transition">
-            <h3 className="text-xl font-semibold mb-4">
-              Smart Reports
-            </h3>
-
-            <p className="text-slate-400">
-              Generate detailed reports with AI-powered insights.
-            </p>
-          </div>
-
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 hover:border-cyan-500 transition">
-            <h3 className="text-xl font-semibold mb-4">
-              Emergency Alerts
-            </h3>
-
-            <p className="text-slate-400">
-              Receive notifications and response recommendations.
-            </p>
-          </div>
-
-        </div>
-
-      </section>
-
-      {/* Footer */}
-      <footer className="border-t border-slate-800 py-8 text-center text-slate-500">
-        GuardianX AI • Emergency Response & Safety Monitoring Platform
-      </footer>
 
     </main>
   );

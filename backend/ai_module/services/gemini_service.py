@@ -29,13 +29,13 @@ def ask_gemini(prompt: str):
 
         return {
             "success": False,
-            "response": {
-                "emergency_type": "UNKNOWN",
-                "severity": "UNKNOWN",
-                "immediate_actions": [
-                    "Contact emergency services immediately"
-                ],
-                "service_required": "Unknown",
-                "summary": "AI service temporarily unavailable"
-            }
+            "response": """
+{
+  "emergency_type":"UNKNOWN",
+  "severity":"UNKNOWN",
+  "immediate_actions":["Contact emergency services immediately"],
+  "service_required":"Unknown",
+  "summary":"AI service temporarily unavailable"
+}
+"""
         }

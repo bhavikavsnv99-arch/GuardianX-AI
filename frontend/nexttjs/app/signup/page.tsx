@@ -1,132 +1,240 @@
 "use client";
 
 import Link from "next/link";
+
 import { useState } from "react";
 
+import { useRouter } from "next/navigation";
+
+import API from "@/services/api";
+
 export default function SignupPage() {
-  const [showPassword, setShowPassword] = useState(false);
+
+  const router = useRouter();
+
+  const [name, setName] = useState("");
+
+  const [email, setEmail] = useState("");
+
+  const [password, setPassword] = useState("");
+
+  const [loading, setLoading] = useState(false);
+
+  const [error, setError] = useState("");
+
+  const handleSignup = async () => {
+
+    setError("");
+
+    if (!name || !email || !password) {
+
+      setError("Please fill all fields");
+
+      return;
+
+    }
+
+    try {
+
+      setLoading(true);
+
+      await API.post(
+        "/signup",
+        {
+          name,
+          email,
+          password,
+        }
+      );
+
+      // Redirect to login
+      router.push("/login");
+
+    } catch (err) {
+
+      console.error(err);
+
+      setError("Signup failed");
+
+    } finally {
+
+      setLoading(false);
+
+    }
+
+  };
 
   return (
-    <main className="min-h-screen bg-slate-950 flex items-center justify-center px-6 py-10">
-      <div className="w-full max-w-6xl overflow-hidden rounded-3xl border border-slate-800 bg-slate-900 shadow-2xl">
 
-        <div className="grid lg:grid-cols-2">
+    <main className="
+      min-h-screen
+      bg-[#06070A]
+      text-white
+      flex
+      items-center
+      justify-center
+      px-6
+    ">
 
-          {/* Left Section */}
-          <div className="hidden lg:flex flex-col justify-center bg-gradient-to-br from-cyan-500 via-blue-600 to-indigo-700 p-12">
+      <div className="
+        w-full
+        max-w-md
+        rounded-[32px]
+        bg-white/[0.04]
+        border
+        border-white/10
+        backdrop-blur-2xl
+        p-10
+      ">
 
-            <h1 className="text-6xl font-bold text-white">
-              GuardianX AI
-            </h1>
+        {/* Title */}
+        <div className="text-center">
 
-            <p className="mt-6 text-xl text-cyan-50">
-              Smart Emergency Response Platform
-            </p>
+          <h1 className="
+            text-4xl
+            font-bold
+          ">
+            Create Account
+          </h1>
 
-            <div className="mt-12 space-y-5 text-white">
-              <div>✓ AI Emergency Analysis</div>
-              <div>✓ Real-Time Incident Monitoring</div>
-              <div>✓ Emergency Mapping</div>
-              <div>✓ Smart Reports & Insights</div>
+          <p className="
+            mt-4
+            text-slate-400
+          ">
+            Join GuardianX AI Platform
+          </p>
+
+        </div>
+
+        {/* Form */}
+        <div className="mt-10 space-y-5">
+
+          {/* Name */}
+          <input
+            type="text"
+            placeholder="Full Name"
+            value={name}
+            onChange={(e) =>
+              setName(e.target.value)
+            }
+            className="
+              w-full
+              h-14
+              rounded-2xl
+              bg-[#0F172A]
+              border
+              border-white/5
+              px-5
+              outline-none
+              text-white
+            "
+          />
+
+          {/* Email */}
+          <input
+            type="email"
+            placeholder="Email Address"
+            value={email}
+            onChange={(e) =>
+              setEmail(e.target.value)
+            }
+            className="
+              w-full
+              h-14
+              rounded-2xl
+              bg-[#0F172A]
+              border
+              border-white/5
+              px-5
+              outline-none
+              text-white
+            "
+          />
+
+          {/* Password */}
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) =>
+              setPassword(e.target.value)
+            }
+            className="
+              w-full
+              h-14
+              rounded-2xl
+              bg-[#0F172A]
+              border
+              border-white/5
+              px-5
+              outline-none
+              text-white
+            "
+          />
+
+          {/* Error */}
+          {error && (
+
+            <div className="
+              text-red-400
+              text-sm
+            ">
+              {error}
             </div>
 
-          </div>
+          )}
 
-          {/* Right Section */}
-          <div className="flex items-center justify-center p-10 lg:p-16">
+          {/* Button */}
+          <button
+            onClick={handleSignup}
+            disabled={loading}
+            className="
+              w-full
+              h-14
+              rounded-2xl
+              bg-gradient-to-r
+              from-cyan-500
+              to-blue-500
+              font-medium
+              hover:scale-[1.02]
+              transition-all
+              text-black
+            "
+          >
 
-            <div className="w-full max-w-md">
+            {loading
+              ? "Creating Account..."
+              : "Sign Up"}
 
-              <div className="mb-10">
+          </button>
 
-                <h2 className="text-4xl font-bold text-white">
-                  Create Account
-                </h2>
+        </div>
 
-                <p className="mt-3 text-slate-400">
-                  Join GuardianX AI platform
-                </p>
+        {/* Footer */}
+        <div className="
+          mt-8
+          text-center
+          text-sm
+          text-slate-400
+        ">
 
-              </div>
+          Already have an account?{" "}
 
-              <div className="space-y-5">
-
-                <div>
-                  <label className="block text-sm text-slate-300 mb-2">
-                    Full Name
-                  </label>
-
-                  <input
-                    type="text"
-                    placeholder="Enter your name"
-                    className="w-full rounded-xl border border-slate-700 bg-slate-800 px-4 py-4 text-white outline-none focus:border-cyan-500"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm text-slate-300 mb-2">
-                    Email Address
-                  </label>
-
-                  <input
-                    type="email"
-                    placeholder="Enter your email"
-                    className="w-full rounded-xl border border-slate-700 bg-slate-800 px-4 py-4 text-white outline-none focus:border-cyan-500"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm text-slate-300 mb-2">
-                    Password
-                  </label>
-
-                  <div className="relative">
-
-                    <input
-                      type={showPassword ? "text" : "password"}
-                      placeholder="Create password"
-                      className="w-full rounded-xl border border-slate-700 bg-slate-800 px-4 py-4 text-white outline-none focus:border-cyan-500"
-                    />
-
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setShowPassword(!showPassword)
-                      }
-                      className="absolute right-4 top-4 text-cyan-400 text-sm"
-                    >
-                      {showPassword ? "Hide" : "Show"}
-                    </button>
-
-                  </div>
-                </div>
-
-                <button
-                  className="w-full rounded-xl bg-cyan-500 py-4 font-semibold text-white transition hover:bg-cyan-600"
-                >
-                  Create Account
-                </button>
-
-                <div className="text-center text-slate-400">
-                  Already have an account?
-                </div>
-
-                <Link
-                  href="/login"
-                  className="block w-full rounded-xl border border-slate-700 py-4 text-center text-white transition hover:bg-slate-800"
-                >
-                  Login
-                </Link>
-
-              </div>
-
-            </div>
-
-          </div>
+          <Link
+            href="/login"
+            className="
+              text-cyan-400
+            "
+          >
+            Login
+          </Link>
 
         </div>
 
       </div>
+
     </main>
+
   );
+
 }
