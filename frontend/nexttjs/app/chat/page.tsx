@@ -22,19 +22,7 @@ type Message = {
 export default function ChatPage() {
   const router = useRouter();
 
-useEffect(() => {
-
-  const token = localStorage.getItem("token");
-
-  if (!token) {
-
-    router.push("/login");
-
-  }
-
-}, [router]);
-
-  const [messages, setMessages] = useState<Message[]>([
+   const [messages, setMessages] = useState<Message[]>([
     {
       sender: "ai",
       text:
@@ -48,26 +36,92 @@ useEffect(() => {
 
   const [error, setError] = useState("");
 
-  const sendMessage = async () => {
+  const sendMessage = async (
+  customMessage?: string
+) => {
 
-    if (!input.trim()) return;
+   const messageToSend =
+  customMessage || input;
 
-    setError("");
+if (!messageToSend.trim()) return;
 
-    // USER MESSAGE
-    const userMessage: Message = {
-      sender: "user",
-      text: input,
-    };
+setError("");
 
-    setMessages((prev) => [
-      ...prev,
-      userMessage,
-    ]);
+const triggerSOS = async () => {
 
-    const userInput = input;
+  const sosMessage =
+    localStorage.getItem("guardianx_sos");
 
-    setInput("");
+  if (!sosMessage) return;
+
+  localStorage.removeItem(
+    "guardianx_sos"
+  );
+
+  await sendMessage(sosMessage);
+
+};
+
+useEffect(() => {
+
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+
+    router.push("/login");
+    return;
+
+  }
+
+  const sosMessage =
+    localStorage.getItem("guardianx_sos");
+
+  if (sosMessage) {
+
+    localStorage.removeItem(
+      "guardianx_sos"
+    );
+
+    // Delay slightly so component is fully mounted
+    setTimeout(() => {
+
+      sendMessage(sosMessage);
+
+    }, 100);
+
+  }
+
+}, []);
+
+useEffect(() => {
+
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+
+    router.push("/login");
+    return;
+
+  }
+
+  triggerSOS();
+
+}, [router]);
+
+// USER MESSAGE
+const userMessage: Message = {
+  sender: "user",
+  text: messageToSend,
+};
+
+setMessages((prev) => [
+  ...prev,
+  userMessage,
+]);
+
+const userInput = messageToSend;
+
+setInput("");
 
     try {
 
@@ -433,7 +487,7 @@ setMessages((prev) => [...prev, aiMessage]);
 
             {/* BUTTON */}
             <button
-              onClick={sendMessage}
+              onClick={() => sendMessage()}
               disabled={loading}
               className="
                 bg-gradient-to-r
