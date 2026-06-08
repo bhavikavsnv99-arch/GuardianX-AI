@@ -19,7 +19,7 @@ export default function HomePage() {
 
   {/* BACKGROUND SYSTEM */}
        <AnimatedBackground /> 
- <FloatingParticles /> 
+       <FloatingParticles /> 
 
       {/* HERO */}
      <section className="min-h-screen flex items-center justify-center px-6 relative">
