@@ -15,11 +15,11 @@ import FloatingParticles from "@/components/FloatingParticles";
 
 export default function HomePage() {
   return (
-    <main className="bg-[#06070A] text-white overflow-hidden">
+  <main className="relative z-10 text-white overflow-hidden">
 
   {/* BACKGROUND SYSTEM */}
        <AnimatedBackground /> 
- <FloatingParticles /> 
+       <FloatingParticles /> 
 
       {/* HERO */}
      <section className="min-h-screen flex items-center justify-center px-6 relative">
