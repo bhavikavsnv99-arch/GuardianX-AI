@@ -72,3 +72,141 @@ h6 {
   box-shadow:
     0 0 40px rgba(34, 211, 238, 0.15);
 }
+
+/* Aurora Base */
+
+.aurora {
+  position: absolute;
+  width: 120%;
+  height: 120%;
+  left: -10%;
+  top: -10%;
+  filter: blur(90px);
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* Purple */
+
+.aurora-1 {
+  background: linear-gradient(
+    120deg,
+    transparent 10%,
+    rgba(139, 92, 246, 0.7) 40%,
+    transparent 80%
+  );
+
+  animation: auroraMove1 18s ease-in-out infinite alternate;
+}
+
+/* Blue */
+
+.aurora-2 {
+  background: linear-gradient(
+    220deg,
+    transparent 20%,
+    rgba(59, 130, 246, 0.6) 50%,
+    transparent 90%
+  );
+
+  animation: auroraMove2 24s ease-in-out infinite alternate;
+}
+
+/* Cyan */
+
+.aurora-3 {
+  background: linear-gradient(
+    45deg,
+    transparent 15%,
+    rgba(6, 182, 212, 0.5) 55%,
+    transparent 95%
+  );
+
+  animation: auroraMove3 20s ease-in-out infinite alternate;
+}
+
+@keyframes auroraMove1 {
+  from {
+    transform: rotate(-8deg) translateX(-120px) translateY(-40px);
+  }
+  to {
+    transform: rotate(10deg) translateX(120px) translateY(40px);
+  }
+}
+
+@keyframes auroraMove2 {
+  from {
+    transform: rotate(12deg) translateX(100px) translateY(-60px);
+  }
+  to {
+    transform: rotate(-12deg) translateX(-100px) translateY(60px);
+  }
+}
+
+@keyframes auroraMove3 {
+  from {
+    transform: rotate(0deg) translateY(-80px);
+  }
+  to {
+    transform: rotate(15deg) translateY(80px);
+  }
+}
+
+.particles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.6);
+
+  animation: particleFloat 12s linear infinite;
+}
+
+@keyframes particleFloat {
+  0% {
+    transform: translateY(0px);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-200px);
+    opacity: 0;
+  }
+}
+
+.animated-grid {
+  position: absolute;
+  inset: 0;
+
+  background-image:
+    linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+
+  background-size: 60px 60px;
+
+  animation: gridMove 25s linear infinite;
+
+  opacity: .3;
+}
+
+@keyframes gridMove {
+
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 60px 60px;
+  }
+
+}

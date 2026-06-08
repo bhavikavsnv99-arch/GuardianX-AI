@@ -42,6 +42,15 @@ export default function DashboardPage() {
     }
 
   }, [router]);
+  const handleSOS = () => {
+
+  localStorage.setItem(
+    "guardianx_sos",
+    "I need emergency assistance"
+  );
+
+  router.push("/chat");
+};
   const emergencyData = [
     { name: "Fire", cases: 12 },
     { name: "Medical", cases: 10 },
@@ -94,6 +103,25 @@ export default function DashboardPage() {
             Real-time emergency monitoring and AI assisted response management.
           </p>
         </div>
+
+        {/* SOS BUTTON */}
+        <button
+          onClick={handleSOS}
+          className="
+            w-full
+            mb-10
+            py-6
+            rounded-3xl
+            bg-red-600
+            hover:bg-red-700
+            transition-all
+            text-2xl
+            font-bold
+            shadow-lg
+          "
+        >
+          🚨 EMERGENCY SOS
+        </button>
 
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-10">

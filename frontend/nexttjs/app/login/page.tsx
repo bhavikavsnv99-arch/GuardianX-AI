@@ -43,6 +43,12 @@ export default function LoginPage() {
         "token",
         response.data.access_token
       );
+      localStorage.setItem(
+        "user",
+        JSON.stringify(
+          response.data.user
+        )
+      );
 
       // Redirect
       router.push("/dashboard");

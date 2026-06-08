@@ -20,6 +20,7 @@ export default function GuardianSidebar() {
   const handleLogout = () => {
 
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
 
     router.push("/login");
 
