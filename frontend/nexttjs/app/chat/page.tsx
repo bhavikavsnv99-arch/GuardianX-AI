@@ -36,107 +36,53 @@ export default function ChatPage() {
 
   const [error, setError] = useState("");
 
+  const triggerSOS = async () => {
+    const sosMessage =
+      localStorage.getItem("guardianx_sos");
+
+    if (!sosMessage) return;
+
+    localStorage.removeItem("guardianx_sos");
+
+    await sendMessage(sosMessage);
+  };
+
   const sendMessage = async (
-  customMessage?: string
-) => {
+    customMessage?: string
+  ) => {
+    const messageToSend =
+      customMessage || input;
 
-   const messageToSend =
-  customMessage || input;
+    if (!messageToSend.trim()) return;
 
-if (!messageToSend.trim()) return;
+    setError("");
 
-setError("");
+    const userMessage: Message = {
+      sender: "user",
+      text: messageToSend,
+    };
 
-const triggerSOS = async () => {
+    setMessages((prev) => [
+      ...prev,
+      userMessage,
+    ]);
 
-  const sosMessage =
-    localStorage.getItem("guardianx_sos");
+    const userInput = messageToSend;
 
-  if (!sosMessage) return;
-
-  localStorage.removeItem(
-    "guardianx_sos"
-  );
-
-  await sendMessage(sosMessage);
-
-};
-
-useEffect(() => {
-
-  const token = localStorage.getItem("token");
-
-  if (!token) {
-
-    router.push("/login");
-    return;
-
-  }
-
-  const sosMessage =
-    localStorage.getItem("guardianx_sos");
-
-  if (sosMessage) {
-
-    localStorage.removeItem(
-      "guardianx_sos"
-    );
-
-    // Delay slightly so component is fully mounted
-    setTimeout(() => {
-
-      sendMessage(sosMessage);
-
-    }, 100);
-
-  }
-
-}, []);
-
-useEffect(() => {
-
-  const token = localStorage.getItem("token");
-
-  if (!token) {
-
-    router.push("/login");
-    return;
-
-  }
-
-  triggerSOS();
-
-}, [router]);
-
-// USER MESSAGE
-const userMessage: Message = {
-  sender: "user",
-  text: messageToSend,
-};
-
-setMessages((prev) => [
-  ...prev,
-  userMessage,
-]);
-
-const userInput = messageToSend;
-
-setInput("");
+    setInput("");
 
     try {
-
       setLoading(true);
 
-      // BACKEND REQUEST
       const response = await API.post("/chat", {
-  message: userInput,
-});
+        message: userInput,
+      });
 
-console.log("API RESPONSE:", response.data);
+      console.log("API RESPONSE:", response.data);
 
-const emergencyData = response.data.data;
+      const emergencyData = response.data.data;
 
-const aiText = `
+      const aiText = `
 🚨 Emergency Type: ${emergencyData.emergency_type}
 
 ⚠️ Severity: ${emergencyData.severity}
@@ -152,15 +98,13 @@ ${emergencyData.immediate_actions
 ${emergencyData.summary}
 `;
 
-const aiMessage: Message = {
-  sender: "ai",
-  text: aiText,
-};
+      const aiMessage: Message = {
+        sender: "ai",
+        text: aiText,
+      };
 
-setMessages((prev) => [...prev, aiMessage]);
-
+      setMessages((prev) => [...prev, aiMessage]);
     } catch (err) {
-
       console.error(err);
 
       setError(
@@ -177,14 +121,21 @@ setMessages((prev) => [...prev, aiMessage]);
         ...prev,
         errorMessage,
       ]);
-
     } finally {
-
       setLoading(false);
+    }
+  };
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      router.push("/login");
+      return;
     }
 
-  };
+    triggerSOS();
+  }, [router]);
 
   return (
 
