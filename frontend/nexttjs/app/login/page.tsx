@@ -38,17 +38,29 @@ export default function LoginPage() {
         }
       );
 
-      // Store Token
+      if (!response.data?.success) {
+        throw new Error(
+          response.data?.message || "Login failed"
+        );
+      }
+
+      if (!response.data.access_token) {
+        throw new Error("Missing access token");
+      }
+
       localStorage.setItem(
         "token",
         response.data.access_token
       );
-      localStorage.setItem(
-        "user",
-        JSON.stringify(
-          response.data.user
-        )
-      );
+
+      if (response.data.user) {
+        localStorage.setItem(
+          "user",
+          JSON.stringify(response.data.user)
+        );
+      } else {
+        localStorage.removeItem("user");
+      }
 
       // Redirect
       router.push("/dashboard");
