@@ -8,8 +8,8 @@ export const metadata: Metadata = {
   title: "GuardianX AI",
   description: "AI Emergency Response Platform",
   icons: {
-    icon: "/favicon.ico.ico",
-    shortcut: "/favicon.ico.ico",
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
     apple: "/favicon.ico",
   },
 };
