@@ -10,16 +10,31 @@ export default function ProfilePage() {
 
   useEffect(() => {
 
-    const storedUser =
-      localStorage.getItem("user");
+    const storedUser = localStorage.getItem("user");
 
-    if (storedUser) {
+    if (
+      !storedUser ||
+      storedUser === "undefined" ||
+      storedUser === "null"
+    ) {
+      if (storedUser) {
+        localStorage.removeItem("user");
+      }
+      return;
+    }
 
-      const user =
-        JSON.parse(storedUser);
+    try {
+      const user = JSON.parse(storedUser);
 
-      setName(user.name || "");
-      setEmail(user.email || "");
+      setName(user?.name || "");
+      setEmail(user?.email || "");
+    } catch (error) {
+      console.error(
+        "Invalid user data in localStorage:",
+        storedUser,
+        error
+      );
+      localStorage.removeItem("user");
     }
 
   }, []);
