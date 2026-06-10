@@ -2,6 +2,7 @@ fastapi
 uvicorn[standard]
 pymongo
 python-dotenv
+google-genai
 google-generativeai
 passlib[bcrypt]
 python-jose
