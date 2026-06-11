@@ -86,7 +86,7 @@ export default function HomePage() {
         tracking-[-0.04em]
       "
     >
-      GuardianX AI
+      AI POWERED
       <br />
 
       <span
@@ -98,7 +98,7 @@ export default function HomePage() {
           bg-clip-text
         "
       >
-        Emergency Intelligence
+        Emergency & Safety Analyser
       </span>
     </motion.h1>
 
