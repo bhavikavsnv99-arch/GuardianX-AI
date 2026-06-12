@@ -110,7 +110,7 @@ export default function HomePage() {
       className="
         bg-gradient-to-r
         from-violet-400
-        to-blue-400
+        to-red-400
         text-transparent
         bg-clip-text
       "
