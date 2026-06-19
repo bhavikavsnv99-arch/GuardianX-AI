@@ -65,11 +65,24 @@ const userIcon = new Icon({
   iconAnchor: [12, 41],
 });
 
+type Place = {
+  lat: number;
+  lon: number;
+  tags?: {
+    name?: string;
+    amenity?: string;
+  };
+};
+
+type OverpassResponse = {
+  elements?: Place[];
+};
+
 export default function MapComponent() {
 
   const [position, setPosition] =
     useState<[number, number] | null>(null);
-    const [places, setPlaces] = useState<any[]>([]);
+  const [places, setPlaces] = useState<Place[]>([]);
 
     function calculateDistance(
   lat1: number,
@@ -149,11 +162,11 @@ export default function MapComponent() {
       }
     );
 
-    const data = await response.json();
+    const data = (await response.json()) as OverpassResponse;
 
     const sortedPlaces =
-  (data.elements || []).sort(
-    (a: any, b: any) => {
+      (data.elements || []).sort(
+        (a: Place, b: Place) => {
 
       const distanceA =
         calculateDistance(

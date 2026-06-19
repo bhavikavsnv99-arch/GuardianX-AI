@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 
 import Sidebar from "@/components/GuardianSidebar";
@@ -36,53 +36,41 @@ export default function ChatPage() {
 
   const [error, setError] = useState("");
 
-  const triggerSOS = async () => {
-    const sosMessage =
-      localStorage.getItem("guardianx_sos");
+  const sendMessage = useCallback(
+    async (customMessage?: string) => {
+      const messageToSend =
+        customMessage || input;
 
-    if (!sosMessage) return;
+      if (!messageToSend.trim()) return;
 
-    localStorage.removeItem("guardianx_sos");
+      setError("");
 
-    await sendMessage(sosMessage);
-  };
+      const userMessage: Message = {
+        sender: "user",
+        text: messageToSend,
+      };
 
-  const sendMessage = async (
-    customMessage?: string
-  ) => {
-    const messageToSend =
-      customMessage || input;
+      setMessages((prev) => [
+        ...prev,
+        userMessage,
+      ]);
 
-    if (!messageToSend.trim()) return;
+      const userInput = messageToSend;
 
-    setError("");
+      setInput("");
 
-    const userMessage: Message = {
-      sender: "user",
-      text: messageToSend,
-    };
+      try {
+        setLoading(true);
 
-    setMessages((prev) => [
-      ...prev,
-      userMessage,
-    ]);
+        const response = await API.post("/chat", {
+          message: userInput,
+        });
 
-    const userInput = messageToSend;
+        console.log("API RESPONSE:", response.data);
 
-    setInput("");
+        const emergencyData = response.data.data;
 
-    try {
-      setLoading(true);
-
-      const response = await API.post("/chat", {
-        message: userInput,
-      });
-
-      console.log("API RESPONSE:", response.data);
-
-      const emergencyData = response.data.data;
-
-      const aiText = `
+        const aiText = `
 🚨 Emergency Type: ${emergencyData.emergency_type}
 
 ⚠️ Severity: ${emergencyData.severity}
@@ -98,33 +86,46 @@ ${emergencyData.immediate_actions
 ${emergencyData.summary}
 `;
 
-      const aiMessage: Message = {
-        sender: "ai",
-        text: aiText,
-      };
+        const aiMessage: Message = {
+          sender: "ai",
+          text: aiText,
+        };
 
-      setMessages((prev) => [...prev, aiMessage]);
-    } catch (err) {
-      console.error(err);
+        setMessages((prev) => [...prev, aiMessage]);
+      } catch (err) {
+        console.error(err);
 
-      setError(
-        "Failed to connect with GuardianX backend."
-      );
+        setError(
+          "Failed to connect with GuardianX backend."
+        );
 
-      const errorMessage: Message = {
-        sender: "ai",
-        text:
-          "❌ Backend connection failed. Please ensure FastAPI server is running.",
-      };
+        const errorMessage: Message = {
+          sender: "ai",
+          text:
+            "❌ Backend connection failed. Please ensure FastAPI server is running.",
+        };
 
-      setMessages((prev) => [
-        ...prev,
-        errorMessage,
-      ]);
-    } finally {
-      setLoading(false);
-    }
-  };
+        setMessages((prev) => [
+          ...prev,
+          errorMessage,
+        ]);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [input]
+  );
+
+  const triggerSOS = useCallback(async () => {
+    const sosMessage =
+      localStorage.getItem("guardianx_sos");
+
+    if (!sosMessage) return;
+
+    localStorage.removeItem("guardianx_sos");
+
+    await sendMessage(sosMessage);
+  }, [sendMessage]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -135,7 +136,8 @@ ${emergencyData.summary}
     }
 
     triggerSOS();
-  }, [router]);
+  }, [router, triggerSOS]);
+
 
   return (
 

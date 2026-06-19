@@ -8,7 +8,7 @@ import API from "@/services/api";
 
 type HistoryItem = {
   user_message: string;
-  ai_response: any;
+  ai_response: string | Record<string, unknown>;
   emergency_detected: boolean;
   timestamp: string;
 };
@@ -33,7 +33,7 @@ export default function HistoryPage() {
 
     fetchHistory();
 
-  }, []);
+  }, [router]);
 
   const fetchHistory = async () => {
 
