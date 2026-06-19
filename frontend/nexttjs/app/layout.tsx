@@ -7,6 +7,11 @@ import { Toaster } from "react-hot-toast";
 export const metadata: Metadata = {
   title: "GuardianX AI",
   description: "AI Emergency Response Platform",
+  icons: {
+    icon: "/favicon.ico?v=2",
+    shortcut: "/favicon.ico?v=2",
+    apple: "/favicon.ico?v=2",
+  },
 };
 
 export default function RootLayout({
